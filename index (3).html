@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="mn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Boyfriend Night Mode 💗</title>
+<style>
+:root{--bg:#08070b;--panel:#121017;--panel2:#1b1420;--pink:#ff4fa3;--pink2:#ff8cc7;--text:#f8f2f7;--muted:#a99eac;--line:#382337;--green:#8cffc0;--yellow:#ffd782;--card:var(--panel);--ink:var(--text);--mute:var(--muted);--soft:var(--panel2);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:radial-gradient(ellipse at 50% -15%,#37112d 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:480px;margin:0 auto;padding:14px 16px 96px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.logo{font-weight:900;letter-spacing:.11em;font-size:15px}.logo span{color:var(--pink)}.status{font-size:10px;color:var(--green);letter-spacing:.13em}
+h1{font-size:28px;line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:16px 0 6px}h2{font-size:18px;margin:0 0 8px;letter-spacing:-.02em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.mute{color:var(--muted);font-size:14px}.big{font-size:44px;text-align:center}
+button,.btn{background:var(--pink);color:#210b18;border:1px solid var(--pink);border-radius:12px;padding:11px 16px;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;display:inline-block;transition:.15s}
+button:hover,.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+button.ghost,.btn.ghost{background:#211824;color:var(--text);border-color:var(--line)}button:disabled{opacity:.4;transform:none}
+input[type=text]{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0f0d13;color:var(--text);font:inherit;margin:5px 0}
+input[type=text]:focus{outline:none;border-color:var(--pink)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.center{text-align:center}
+.arena{position:relative;height:110px}.arena button{position:absolute;transition:all .25s}
+.opt{display:block;width:100%;text-align:left;margin:7px 0;background:#211824;color:var(--text);border-color:var(--line)}
+.opt:hover{border-color:var(--pink)}
+.bar{height:10px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--pink2));transition:width .3s}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(18,16,23,.96);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
+nav button{flex:1;background:transparent;color:var(--muted);border-color:transparent;padding:9px 4px;font-size:12px;letter-spacing:.04em}nav button.on{background:var(--panel2);color:var(--pink2);border-color:var(--line)}
+label.chk{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+label.chk input{width:20px;height:20px;accent-color:var(--pink)}
+.photo{width:100%;border-radius:12px;border:1px solid var(--line);margin:8px 0;max-height:300px;object-fit:cover}
+.env{width:100%;text-align:left;margin:6px 0}.cert{border:2px dashed var(--pink);text-align:center;background:linear-gradient(180deg,#210b18,var(--panel))}
+.tag{display:inline-block;background:#120e16;border:1px solid var(--line);color:var(--pink2);border-radius:999px;padding:2px 10px;font-size:11px;font-weight:800;letter-spacing:.14em}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--pink);color:var(--text);padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;max-width:90%;text-align:center}
+#toast.on{opacity:1}
+input[type=range]{width:100%;accent-color:var(--pink)}
+b{color:var(--text)}.ok{color:var(--green)}
+</style></head>
+<body><main id="app"></main><div id="toast"></div>
+<script>
+const QUIZ=[
+{q:'Миний хамгийн их дуртай амттан эсвэл цай юу вэ?',o:['Bubble tea','Matcha latte','Кофе','Халуун шоколад'],a:0},
+{q:'Би уурласан эсвэл гомдсон үедээ яахыг илүүд үздэг вэ?',o:['Ганцаараа үлдэхийг','Чанга тэврүүлээд үнсүүлэхийг','Утсаа унтраахыг','Юу ч ярихгүй байхыг'],a:1},
+{q:'Намайг хамгийн их баярлуулдаг жижигхэн зүйл?',o:['Гэнэтийн амттай юм авчирч өгөх','Хамтдаа кино үзэх','Хөөрхөн мессеж бичих','Бүгд зөв 💗'],a:3},
+{q:'Бид хоёр анх уулзахдаа эсвэл чатлаж эхлэхдээ юу ярьж байснаа санадаг уу?',o:['Мэдээж тод санаж байгаа','Мартчихсан 😶','Тааварлаж ядаад байна','Аль нь ч биш'],a:0}];
+const MISSIONS=['Найзуудтайгаа хөгжилд 🎉','Найз охиндоо хөөрхөн мессеж явуул 💬','Ус уу, өөрийгөө анхаар 💧','Аюулгүй харьж ир 🏠'];
+const POOL=['Ширээн дээрх хамгийн хөөрхөн зүйлийг зураг дар','Найзуудтайгаа хамгийн тэнэг царайгаар selfie дар','Cheers хийж байгаа аяганы зураг','Гараараа зүрх хэлбэр гаргаж зураг дар','Хамгийн сайн найзаараа “Манай хүргэн эгч хамгийн гоё” гэж үзүүлсэн зураг','Өнөөдрийн outfit-ийн зураг','Найзынхаа хамгийн галзуу бүжгийн зураг','Одоо байгаа газрынхаа орчныг үзүүл','Усны аяга барьсан зураг (hydration check 💧)','Цаасан дээр “Miss you” гэж бичээд барьсан зураг'];
+const OPEN=[
+['Намайг санасан үедээ нээ 🥺','Би чамайг санаж байна. Хөгжилтэй байж бай, гэхдээ миний бяцхан зүрх чамтай хамт байгаа шүү 💗'],
+['Найзууд чинь чамаас илүү хөгжилтэй санагдвал нээ 😂','Хөгжилтэй байх ёстой! Гэхдээ чамайг хамгийн хөгжилтэй болгодог хүн хэн бэ? Мэдээж би 😌'],
+['Гэртээ харих цаг болсон үед нээ 🕛','Цаг боллоо, baby. Ус уу, такси дууд, найзууддаа баяртай хэл. Харьсан даруйдаа надад мэдэгдээрэй 🏠'],
+['Намайг тэврэхийг хүсвэл нээ 🫂','Яг одоо ирж намайг чанга гэгч нь тэвэр! Өөр сонголт байхгүй шүү 💗']
+];
+const S={screen:'ask',tab:'m',praise:['','',''],q:0,noted:0,answered:false,chk:[false,false,false,false],boss:false,drinks:0,reply:70,miss:90,opened:{},tasks:[],photos:[null,null,null],dodge:0};
+let CFG={correct:QUIZ.map(q=>[q.a])},PH={},RES=null;
+
+function loadLocalStorageData(){
+  try{
+    const savedRes=localStorage.getItem('bmt_res');
+    if(savedRes) RES=JSON.parse(savedRes);
+    const savedPh=localStorage.getItem('bmt_ph');
+    if(savedPh) PH=JSON.parse(savedPh);
+    const savedCfg=localStorage.getItem('bmt_cfg');
+    if(savedCfg) CFG=JSON.parse(savedCfg);
+  }catch(e){}
+}
+loadLocalStorageData();
+
+function isRight(q,i){const c=(CFG.correct[q]&&CFG.correct[q].length)?CFG.correct[q]:[QUIZ[q].a];return c.includes(i)}
+function openAdmin(){const k=prompt('Admin код:');if(k===null)return;if(k.trim().toLowerCase()==='enkhjin'){S.screen='admin';render()}else toast('Access denied 🚫')}
+function toggleCorrect(q,i,on){const c=(CFG.correct[q]||[]).slice();CFG.correct[q]=on?[...new Set([...c,i])]:c.filter(x=>x!==i)}
+function saveCfg(){try{localStorage.setItem('bmt_cfg',JSON.stringify(CFG));toast('Хадгаллаа ✅')}catch(e){toast('Хадгалж чадсангүй')}}
+function delPhoto(id){if(!confirm('Устгах уу?'))return;delete PH[id];try{localStorage.setItem('bmt_ph',JSON.stringify(PH))}catch(e){}render()}
+function resize(file){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const m=640,r=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*r);c.height=Math.round(img.height*r);c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.6))};img.onerror=rej;img.src=URL.createObjectURL(file)})}
+async function upload(i,file){try{const d=await resize(file);const id='slot'+i;PH[id]={task:S.tasks[i],data:d,at:Date.now()};localStorage.setItem('bmt_ph',JSON.stringify(PH));S.photos[i].sent=true;toast('Зураг админд амжилттай хадгалагдлаа 💌')}catch(e){toast('Зураг хадгалахад алдаа гарлаа')}}
+function saveResult(){try{RES={score:QUIZ.length-S.noted,total:QUIZ.length,praise:S.praise,at:Date.now()};localStorage.setItem('bmt_res',JSON.stringify(RES))}catch(e){}}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),3000)}
+function pick(excl){const a=POOL.filter(x=>!excl.includes(x));return a[Math.floor(Math.random()*a.length)]}
+function initTasks(){S.tasks=[];for(let i=0;i<3;i++)S.tasks.push(pick(S.tasks))}
+function go(s){S.screen=s;render()}
+function dodge(){S.dodge++;const b=document.getElementById('no');b.style.left=Math.random()*65+'%';b.style.top=Math.random()*65+'%';document.getElementById('hint').textContent=S.dodge>4?'Ойлгосон уу? YES дар 😌':'Хөөе, баригдахгүй 😂'}
+function setPraise(i,v){S.praise[i]=v;document.getElementById('pbtn').disabled=!S.praise.every(x=>x.trim().length>=3)}
+function answer(i){if(S.answered)return;S.answered=true;const ok=isRight(S.q,i);if(!ok)S.noted++;const f=document.getElementById('fb');f.textContent=ok?'Зөв! Pass 💗':'Hmm… noted. Бид дараа ярилцана аа 😌';document.getElementById('nxt').style.display='inline-block'}
+function next(){S.q++;S.answered=false;if(S.q>=QUIZ.length){saveResult();go('granted')}else render()}
+function photo(i,inp){const f=inp.files[0];if(!f)return;S.photos[i]={file:f,url:URL.createObjectURL(f)};render();upload(i,f)}
+function reroll(i){S.tasks[i]=pick(S.tasks);render()}
+async function share(i){const p=S.photos[i];try{if(navigator.canShare&&navigator.canShare({files:[p.file]})){await navigator.share({files:[p.file],text:'Mission '+(i+1)+' ✅ '+S.tasks[i]});return}}catch(e){if(e&&e.name==='AbortError')return}toast('Зургаа удаан дараад хадгалж, чатаараа явуулаарай 💌')}
+function done(){return S.chk.filter(Boolean).length+S.photos.filter(Boolean).length}
+function allBase(){return done()===7}
+function tab(t){S.tab=t;render()}
+function drink(d){S.drinks=Math.max(0,S.drinks+d);render()}
+function nav(){return '<nav>'+[['m','🕵🏻‍♀️ Mission'],['d','📊 Dashboard'],['o','💌 Open When']].map(x=>`<button class="${S.tab===x[0]?'on':''}" onclick="tab('${x[0]}')">${x[1]}</button>`).join('')+'</nav>'}
+function render(){
+let h='';
+if(S.screen==='ask'){
+h=`<div class="big">💋</div><h1 class="center">Girlfriend Permission Center</h1><div class="card center"><h2>Өнөөдөр уух зөвшөөрөл хүсэж байна уу?</h2><div class="arena"><button style="left:8%;top:30px" onclick="go('praise')">YES 🍻</button><button id="no" class="ghost" style="left:55%;top:30px" onmouseover="dodge()" ontouchstart="dodge();event.preventDefault()" onclick="dodge()">NO</button></div><div id="hint" class="mute"> </div></div>`}
+else if(S.screen==='praise'){
+h=`<h1>Эхлээд найз охиноо магт 💖</h1><p class="mute">Дор хаяж 3 магтаал бич.</p><div class="card">${[0,1,2].map(i=>`<input type="text" placeholder="Магтаал ${i+1}…" value="${S.praise[i].replace(/"/g,'&quot;')}" oninput="setPraise(${i},this.value)">`).join('')}<br><button id="pbtn" ${S.praise.every(x=>x.trim().length>=3)?'':'disabled'} onclick="go('quiz')">Үргэлжлүүлэх</button></div>`}
+else if(S.screen==='quiz'){
+const q=QUIZ[S.q];
+h=`<h1>🧠 Чи миний тухай хэр мэдэх вэ?</h1><p class="mute">Асуулт ${S.q+1}/${QUIZ.length}</p><div class="card"><h2>${q.q}</h2>${q.o.map((o,i)=>`<button class="opt" onclick="answer(${i})">${o}</button>`).join('')}<p id="fb" style="font-weight:700"></p><button id="nxt" style="display:none" onclick="next()">Дараагийн →</button></div>`}
+else if(S.screen==='granted'){
+h=`<div class="big">✅</div><h1 class="center">Permission granted</h1><div class="card center"><p>Шалгалтын үр дүн: <b>${QUIZ.length-S.noted}/${QUIZ.length}</b>${S.noted?` — ${S.noted} удаа “noted” 😌`:' — гайхалтай!'}</p><p>Гэхдээ гэртээ бүтэн ирээрэй, baby. 💗</p><button onclick="initTasks();go('app')">Night mode эхлүүлэх 🚀</button></div>`}
+else if(S.screen==='admin'){
+const doneScr=RES?`${RES.score}/${RES.total}`:'—';
+const praisesHtml=RES&&RES.praise&&RES.praise.some(x=>x)?RES.praise.map((p,i)=>p?`<p class="mute"><b>Магтаал ${i+1}:</b> ${p}</p>`:'').join(''):'<p class="mute">Магтаал одоогоор бичигдээгүй байна.</p>';
+h=`<div class="row" style="justify-content:space-between"><h1>🔐 Admin Report</h1><button class="ghost" onclick="go('ask')">← Буцах</button></div>
+<div class="card"><span class="tag">QUIZ & PRAISE RESULT</span><p>Сүүлийн quiz-ийн дүн: <b>${doneScr}</b></p><hr style="border-color:var(--line);margin:10px 0">${praisesHtml}</div>
+<div class="card"><h2>Зөв хариултууд тохируулах</h2><p class="mute">Олон зөв хариулт сонгож болно.</p>
+${QUIZ.map((q,qi)=>{const c=(CFG.correct[qi]&&CFG.correct[qi].length)?CFG.correct[qi]:[q.a];return `<p><b>${qi+1}. ${q.q}</b></p>${q.o.map((o,oi)=>`<label class="chk"><input type="checkbox" ${c.includes(oi)?'checked':''} onchange="toggleCorrect(${qi},${oi},this.checked)"><span>${o}</span></label>`).join('')}`}).join('')}
+<br><button onclick="saveCfg()">💾 Хадгалах</button></div>
+<div class="card"><h2>📸 Ирүүлсэн зургууд</h2>${Object.keys(PH).length?Object.keys(PH).sort().map(id=>`<div style="margin-bottom:15px;border-bottom:1px solid var(--line);padding-bottom:10px"><p class="mute"><b>Даалгавар:</b> ${PH[id].task}<br><b>Цаг:</b> ${new Date(PH[id].at).toLocaleString()}</p><img class="photo" src="${PH[id].data}" alt="${id}"><button class="ghost" onclick="delPhoto('${id}')">🗑 Устгах</button></div>`).join(''):'<p class="mute">Одоогоор ирсэн зураг алга.</p>'}</div>`}
+else{
+if(S.tab==='m'){
+const pct=Math.round(done()/7*100);
+h=`<h1>🕵🏻‍♀️ Secret Missions</h1><div class="card"><div class="row" style="justify-content:space-between"><b>Явц</b><span>${done()}/7</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>
+<div class="card"><h2>Үндсэн даалгавар</h2>${MISSIONS.map((m,i)=>`<label class="chk"><input type="checkbox" ${S.chk[i]?'checked':''} onchange="S.chk[${i}]=this.checked;render()"><span><span class="tag">0${i+1}</span>${m}</span></label>`).join('')}</div>
+<h2 style="margin-top:18px">📸 Random photo missions</h2><p class="mute">Санамсаргүй 3 зураг. Авсан даруйдаа надад явуул!</p>
+${[0,1,2].map(i=>{const p=S.photos[i];return `<div class="card"><span class="tag">Photo ${i+1}</span><p><b>${S.tasks[i]}</b></p>${p?`<img class="photo" src="${p.url}" alt="Photo ${i+1}"><div class="row"><button onclick="share(${i})">💌 Надад явуул</button><label class="btn ghost">Дахин авах<input type="file" accept="image/*" capture="environment" hidden onchange="photo(${i},this)"></label></div>`:`<div class="row"><label class="btn">📸 Зураг авах<input type="file" accept="image/*" capture="environment" hidden onchange="photo(${i},this)"></label><button class="ghost" onclick="reroll(${i})">🎲 Өөр</button></div>`}</div>`}).join('')}
+<div class="card center"><h2>👑 Final boss: Найз охиноо тэврэх</h2>${allBase()?`<label class="chk" style="justify-content:center;border:0"><input type="checkbox" ${S.boss?'checked':''} onchange="S.boss=this.checked;render()"> Тэвэрлээ 🫂</label>`:'<p class="mute">🔒 Эхлээд дээрх бүх даалгаврыг гүйцэтгэ.</p>'}</div>
+${S.boss&&allBase()?`<div class="card cert"><div class="big">🏅</div><h1>Certified Good Boy</h1><p>Бүх даалгавар амжилттай биелэв.<br>Өнөө орой: <b>${new Date().toISOString().slice(0,10)}</b></p><p class="mute">Гарын үсэг: Миний хамгийн сайн boyfriend 💗</p></div>`:''}`}
+else if(S.tab==='d'){
+const d=S.drinks;const risk=d>=6?'HIGH RISK 🚨':d>=3?'MEDIUM ⚠️':'LOW ✅';
+const msg=d===0?'Одоохондоо цэвэрхэн 😇':d<3?'Сайн байна, ус мартваа 💧':d<6?'Анхаар, baby 😌':'Ус уу. Харих цаг боллоо. 🚨';
+const sc=Math.round(done()/7*100);
+h=`<h1>🍻 Boyfriend Survival Dashboard</h1>
+<div class="card"><div class="row" style="justify-content:space-between"><b>❤️ Girlfriend love meter</b><b>100%</b></div><div class="bar"><i style="width:100%"></i></div><p class="mute">Түгжигдсэн. Өөрчлөх боломжгүй 😌</p></div>
+<div class="card center"><h2>🍺 Drink counter</h2><div class="row" style="justify-content:center"><button class="ghost" onclick="drink(-1)">−</button><span style="font-size:40px;min-width:70px">${d}</span><button onclick="drink(1)">+</button></div><p><b>${msg}</b></p></div>
+<div class="card"><h2>📊 Tonight’s Boyfriend Report</h2>
+<div class="mute">Reply speed: ${S.reply}/100</div><input type="range" min="0" max="100" value="${S.reply}" oninput="S.reply=+this.value;this.previousElementSibling.textContent='Reply speed: '+this.value+'/100'">
+<div class="mute">Girlfriend missing level: ${S.miss}%</div><input type="range" min="0" max="100" value="${S.miss}" oninput="S.miss=+this.value;this.previousElementSibling.textContent='Girlfriend missing level: '+this.value+'%'">
+<p>Boyfriend loyalty score: <b>100/100</b> <span class="mute">(урьдчилан тохируулсан 😂)</span></p>
+<p>Найзуудын нөлөөллийн түвшин: <b>${risk}</b></p>
+<p>Даалгаврын гүйцэтгэл: <b>${sc}%</b></p>
+<p><b>${sc>=100&&S.boss?'Тайлан: Төгс! Bubble tea-ээс чөлөөлөгдлөө 🧋✅':'Тайлан: Өнөөдрийн гүйцэтгэл хангалтгүй бол маргааш bubble tea-гаар нөхөн төлбөр төлнө 🧋'}</b></p></div>`}
+else{
+h=`<h1>💌 Open When You’re Drunk</h1><p class="mute">Тохирох үедээ нээ.</p>${OPEN.map((o,i)=>`<button class="env ${S.opened[i]?'':'ghost'}" onclick="S.opened[${i}]=!S.opened[${i}];render()">${S.opened[i]?'💗':'✉️'} ${o[0]}</button>${S.opened[i]?`<div class="card">${o[1]}</div>`:''}`).join('')}`}
+h+=nav()}
+app.innerHTML='<header class="top"><div class="logo">BOYFRIEND<span>.night</span></div><button class="ghost" style="padding:4px 9px;font-size:11px" onclick="openAdmin()">ADMIN</button></header>'+h}
+render();
+</script></body></html>
